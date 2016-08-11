@@ -9,6 +9,7 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var fileStore = require('session-file-store')(session);
 var database = require('./lib/database.js');
+var infojobs = require('./lib/infojobs.js');
 var formidable = require('formidable');
 
 var server_port = process.env.OPENSHIFT_NODEJS_PORT || 3000;

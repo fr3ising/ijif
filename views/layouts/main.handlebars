@@ -12,9 +12,6 @@
     <style> .glyphicon-thumbs-up { cursor:pointer } </style>
   </head>
   <body>
-    <a href="/">
-      <img style="width:220;height:169" src="/logo.png" alt="ijif"/>
-    </a>
     <div style="margin-top:0px" class="container">
       {{#if msg}}
       <center><p style="font-size:11pt;text-align:center;color:olive">{{msg}}</p>
@@ -22,6 +19,9 @@
       {{/if}}
       {{{body}}}
     </div>
+    <a href="/">
+      <img style="width:220;height:169" src="/logo.png" alt="ijif"/>
+    </a>
     {{#if showTests}}
     <div id="mocha"></div>
     <script src="/vendor/mocha.js"></script>
