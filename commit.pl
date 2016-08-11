@@ -9,6 +9,8 @@ foreach my $arg ( @ARGV ) {
 }
 
 my @files = qw("commit.pl"
+	       "LICENSE.txt"
+	       "README.md"
 	       "package.json"
 	       "server.js"
 	       "lib/*.js"
