@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+  <head>
+    <title>{{title}}</title>
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/style/main.css" rel="stylesheet">
+    {{#if showTests}}
+    <link href="/vendor/mocha.css" rel="stylesheet">
+    {{/if}}
+    <script src="//code.jquery.com/jquery-2.0.2.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style> .glyphicon-thumbs-up { cursor:pointer } </style>
+  </head>
+  <body>
+    <a href="/">
+      <img style="width:220;height:169" src="/logo.png" alt="Freiworld"/>
+    </a>
+    <div style="margin-top:0px" class="container">
+      {{#if msg}}
+      <center><p style="font-size:11pt;text-align:center;color:olive">{{msg}}</p>
+      </center>
+      {{/if}}
+      {{{body}}}
+    </div>
+    {{#if showTests}}
+    <div id="mocha"></div>
+    <script src="/vendor/mocha.js"></script>
+    <script src="/vendor/chai.js"></script>
+    <script>
+      mocha.ui('tdd');
+      var assert = chai.assert;
+    </script>
+    <script src="/qa/global-tests.js"></script>
+    {{#if pageTestScript}}
+    <script src="{{pageTestScript}}"></script>
+    {{/if}}
+    <script>mocha.run();</script>
+    {{/if}}
+  </body>
+</html>
+ 
+  

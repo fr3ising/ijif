@@ -12,13 +12,15 @@ my @files = qw("commit.pl"
 	       "LICENSE.txt"
 	       "README.md"
 	       "package.json"
+               "views/layouts/*.handlebars"
+               "views/*.handlebars"
 	       "server.js"
 	       "lib/*.js"
+               "public/*"
+	       "sql/*.sql"
 	     );
 
 # "views/*.handlebars"
-# "views/layouts/*.handlebars"
-# "public/*"
 
 foreach my $file ( @files ) {
   system("git add $file");

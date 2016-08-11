@@ -1,159 +1,202 @@
-#!/bin/env node
-//  OpenShift sample Node application
+var data_dir = process.env.OPENSHIFT_DATA_DIR || "./";
 var express = require('express');
-var fs      = require('fs');
+var handlebars = require('express3-handlebars').create({defaultLayout: 'main'});
+var fortune = require('./lib/fortune.js');
+var aux = require('./lib/aux.js');
+var bodyParser = require('body-parser');
+var credentials = require(data_dir+'/credentials.js');
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
+var fileStore = require('session-file-store')(session);
+var database = require('./lib/database.js');
+var formidable = require('formidable');
 
+var server_port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
+var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 
-/**
- *  Define the sample application.
- */
-var SampleApp = function() {
+var app = express();
 
-    //  Scope.
-    var self = this;
+app.engine('handlebars',handlebars.engine);
+app.set('view engine','handlebars');
+app.set('port', server_port);
+app.set('env','development');
+app.disable('x-powered-by');
 
+app.use(bodyParser.json());                        
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser(credentials.cookieSecret));
+app.use(session({
+    secret: credentials.cookieSecret,
+    proxy: true,
+    resave: true,
+    store: new fileStore,
+    saveUninitialized: true
+}));
 
-    /*  ================================================================  */
-    /*  Helper functions.                                                 */
-    /*  ================================================================  */
+app.use(function(req,res,next) {
+    res.locals.showTests = (app.get('env') !== 'production') && (req.query.test === '1');
+    next();
+});
 
-    /**
-     *  Set up server IP address and port # using env variables/defaults.
-     */
-    self.setupVariables = function() {
-        //  Set the environment variables we need.
-        self.ipaddress = process.env.OPENSHIFT_NODEJS_IP;
-        self.port      = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+app.get('/',function(req,res) {
+    req.session.fail = false;
+    database.lastLinks(10,function(err,rows) {
+	res.render('home',{
+	    title:"Freiworld homepage",
+	    nick: req.session.nick,
+	    links: rows});
+    });
+});
 
-        if (typeof self.ipaddress === "undefined") {
-            //  Log errors on OpenShift but continue w/ 127.0.0.1 - this
-            //  allows us to run/test the app locally.
-            console.warn('No OPENSHIFT_NODEJS_IP var, using 127.0.0.1');
-            self.ipaddress = "127.0.0.1";
-        };
-    };
+app.get('/changePassword',function(req,res) {
+    res.render('changePassword',{
+	title:"Cambiar contraseña",
+	nick: req.session.nick});
+});
 
+app.get('/chat',function(req,res) {
+    res.render('chat',{
+	title:"Chat de Freiworld",
+	nick: req.session.nick});
+});
 
-    /**
-     *  Populate the cache.
-     */
-    self.populateCache = function() {
-        if (typeof self.zcache === "undefined") {
-            self.zcache = { 'index.html': '' };
-        }
+app.post('/postChat',function(req,res) {
+    database.insertChat(
+	req.body.message,req.session.nick,false,
+	function(err,rows) {
+	    if ( err ) {
+		res.redirect('500');
+	    } else {
+		res.end();
+	    }
+	});
+});
 
-        //  Local cache for static content.
-        self.zcache['index.html'] = fs.readFileSync('./index.html');
-    };
+app.post('/updatePassword',function(req,res) {
+    if ( req.body.password === req.body.rpassword ) {
+	database.updatePassword(req.session.nick,req.body.password,
+				function(err,rows) {
+				    res.render('home',{
+					title: "Freiworld homepage",
+					nick: req.session.nick,
+					msg: "Password actualizado"});
+				});
+    } else {
+	res.render('changePassword',{title: "Cambiar contraseña",
+				     nick: req.session.nick,
+				     fail: "Error: las contraseñas no coinciden"});
+    }
+});
 
+app.post('/login',function(req,res) {
+    database.signin(req.body.nick,req.body.password,function(err,rows){
+	if ( rows && rows.length > 0 ) {
+	    if ( rows[0].nick === req.body.nick ) {
+		req.session.nick = rows[0].nick;
+		req.session.fail = false;
+		req.session.save(function(err) {
+		    res.redirect('/');
+		});
+	    }
+	} else {
+	    req.session.nick = null;
+	    req.session.fail = "Fallo al acceder, comprueba nickname y password";
+	    req.session.save(function(err) {
+		res.redirect('/signin');
+	    });
+	}
+    });
+});
 
-    /**
-     *  Retrieve entry (content) from cache.
-     *  @param {string} key  Key identifying content to retrieve from cache.
-     */
-    self.cache_get = function(key) { return self.zcache[key]; };
+app.get('/passwordRecovery',function(req,res) {
+    req.session.fail = false;
+    res.render('passwordRecovery',{ title: "Recuperación de contraseña" });
+});
 
+var registerRoutes = require('./lib/registerRoutes.js');
+registerRoutes(app);
 
-    /**
-     *  terminator === the termination handler
-     *  Terminate server on receipt of the specified signal.
-     *  @param {string} sig  Signal to terminate on.
-     */
-    self.terminator = function(sig){
-        if (typeof sig === "string") {
-           console.log('%s: Received %s - terminating sample app ...',
-                       Date(Date.now()), sig);
-           process.exit(1);
-        }
-        console.log('%s: Node server stopped.', Date(Date.now()) );
-    };
+var sendPasswordRoutes = require('./lib/sendPasswordRoutes.js');
+sendPasswordRoutes(app);
 
+// var postLinkRoutes = require('./lib/postLinkRoutes.js');
+// postLinkRoutes(app);
 
-    /**
-     *  Setup termination handlers (for exit and a list of signals).
-     */
-    self.setupTerminationHandlers = function(){
-        //  Process on exit and signals.
-        process.on('exit', function() { self.terminator(); });
+// var postCommentRoutes = require('./lib/postCommentRoutes.js');
+// postCommentRoutes(app);
 
-        // Removed 'SIGPIPE' from the list - bugz 852598.
-        ['SIGHUP', 'SIGINT', 'SIGQUIT', 'SIGILL', 'SIGTRAP', 'SIGABRT',
-         'SIGBUS', 'SIGFPE', 'SIGUSR1', 'SIGSEGV', 'SIGUSR2', 'SIGTERM'
-        ].forEach(function(element, index, array) {
-            process.on(element, function() { self.terminator(element); });
-        });
-    };
+app.get('/chatDisplay',function(req,res) {
+    database.lastChats(30,function(err,rows) {
+	res.render('chatbox',{
+	    nick: req.session.nick,
+	    chats: rows,layout: false});
+    });
+});
 
+app.get('/link/:id',function(req,res) {
+    database.linkById(req.params.id,function(err,info) {
+	if ( !err ) {
+	    rows = info.rows;
+	    res.render('link',{ title: rows[0].title,
+				linkTitle: rows[0].title,
+				uri: rows[0].uri,
+				comment: rows[0].comment,
+				linkNick: rows[0].nick,
+				fail:false,
+				linkId: rows[0].id,
+				idate:rows[0].idate,
+				nick: req.session.nick,
+				comments: info.comments
+			      });
+	} else {
+	    res.redirect('500');
+	}
+    });
+});
 
-    /*  ================================================================  */
-    /*  App server functions (main app logic here).                       */
-    /*  ================================================================  */
+app.get('/sendLink',function(req,res) {
+    res.render('sendLink',{ title: 'Enviar noticia',fail:false,nick:req.session.nick});
+});
 
-    /**
-     *  Create the routing table entries + handlers for the application.
-     */
-    self.createRoutes = function() {
-        self.routes = { };
+app.get('/signout',function(req,res) {
+    req.session.nick = null;
+    req.session.fail = false;
+    req.session.save(function(err) {
+	res.redirect('/');
+    });
+});
 
-        self.routes['/asciimo'] = function(req, res) {
-            var link = "http://i.imgur.com/kmbjB.png";
-            res.send("<html><body><img src='" + link + "'></body></html>");
-        };
+app.get('/signin',function(req,res) {
+    res.render('signin',{title:'Entrar a Freiworld',fail:req.session.fail});
+});
 
-        self.routes['/'] = function(req, res) {
-            res.setHeader('Content-Type', 'text/html');
-            res.send(self.cache_get('index.html') );
-        };
-    };
+app.get('/signup',function(req,res) {
+    res.render('signup',{title:'Regístrate en Freiworld',fail:req.session.fail});
+});
 
+app.get('/about',function(req,res) {
+    console.log(req.session.nick);
+    res.render('about',{
+	title: "About Freiworld",
+	fortune: fortune.getFortune(),
+	pageTestScript: "/qa/about-tests.js",
+	nick: req.session.nick
+    });
+});
 
-    /**
-     *  Initialize the server (express) and create the routes and register
-     *  the handlers.
-     */
-    self.initializeServer = function() {
-        self.createRoutes();
-        self.app = express.createServer();
+app.use(express.static(__dirname+'/public'));
 
-        //  Add handlers for the app (from the routes).
-        for (var r in self.routes) {
-            self.app.get(r, self.routes[r]);
-        }
-    };
+app.use(function(req,res,next) {
+    res.status(404);
+    res.render('404');
+});
 
+app.use(function(req,res,next) {
+    console.error(err.stack);
+    res.status(500);
+    res.render('500');
+});
 
-    /**
-     *  Initializes the sample application.
-     */
-    self.initialize = function() {
-        self.setupVariables();
-        self.populateCache();
-        self.setupTerminationHandlers();
-
-        // Create the express server and routes.
-        self.initializeServer();
-    };
-
-
-    /**
-     *  Start the server (starts up the sample application).
-     */
-    self.start = function() {
-        //  Start the app on the specific interface (and port).
-        self.app.listen(self.port, self.ipaddress, function() {
-            console.log('%s: Node server started on %s:%d ...',
-                        Date(Date.now() ), self.ipaddress, self.port);
-        });
-    };
-
-};   /*  Sample Application.  */
-
-
-
-/**
- *  main():  Main code.
- */
-var zapp = new SampleApp();
-zapp.initialize();
-zapp.start();
-
+app.listen(app.get('port'),server_ip_address,function() {
+    console.log('Express started on http://localhost'+app.get('port')+'; Press Ctrl-C to terminate.');
+});
