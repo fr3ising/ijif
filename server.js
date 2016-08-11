@@ -42,7 +42,7 @@ app.get('/',function(req,res) {
     req.session.fail = false;
     database.lastLinks(10,function(err,rows) {
 	res.render('home',{
-	    title:"Freiworld homepage",
+	    title:"ijif",
 	    nick: req.session.nick,
 	    links: rows});
     });
@@ -50,13 +50,13 @@ app.get('/',function(req,res) {
 
 app.get('/changePassword',function(req,res) {
     res.render('changePassword',{
-	title:"Cambiar contraseña",
+	title:"Cambiar password",
 	nick: req.session.nick});
 });
 
 app.get('/chat',function(req,res) {
     res.render('chat',{
-	title:"Chat de Freiworld",
+	title:"Chat de ijif",
 	nick: req.session.nick});
 });
 
@@ -77,14 +77,14 @@ app.post('/updatePassword',function(req,res) {
 	database.updatePassword(req.session.nick,req.body.password,
 				function(err,rows) {
 				    res.render('home',{
-					title: "Freiworld homepage",
+					title: "ijif",
 					nick: req.session.nick,
 					msg: "Password actualizado"});
 				});
     } else {
-	res.render('changePassword',{title: "Cambiar contraseña",
+	res.render('changePassword',{title: "Cambiar password",
 				     nick: req.session.nick,
-				     fail: "Error: las contraseñas no coinciden"});
+				     fail: "Error: los passwords no coinciden"});
     }
 });
 
@@ -110,7 +110,7 @@ app.post('/login',function(req,res) {
 
 app.get('/passwordRecovery',function(req,res) {
     req.session.fail = false;
-    res.render('passwordRecovery',{ title: "Recuperación de contraseña" });
+    res.render('passwordRecovery',{ title: "Password recovery" });
 });
 
 var registerRoutes = require('./lib/registerRoutes.js');
@@ -167,17 +167,17 @@ app.get('/signout',function(req,res) {
 });
 
 app.get('/signin',function(req,res) {
-    res.render('signin',{title:'Entrar a Freiworld',fail:req.session.fail});
+    res.render('signin',{title:'Entrar a ijif',fail:req.session.fail});
 });
 
 app.get('/signup',function(req,res) {
-    res.render('signup',{title:'Regístrate en Freiworld',fail:req.session.fail});
+    res.render('signup',{title:'Signup en ijif',fail:req.session.fail});
 });
 
 app.get('/about',function(req,res) {
     console.log(req.session.nick);
     res.render('about',{
-	title: "About Freiworld",
+	title: "About ijif",
 	fortune: fortune.getFortune(),
 	pageTestScript: "/qa/about-tests.js",
 	nick: req.session.nick

@@ -1,0 +1,9 @@
+<br/>
+{{#each chats}}
+{{#if this.uri}}
+<p><a href="{{this.uri}}">{{this.message}}</a></p>
+{{else}}
+<p>{{this.message}}</p>
+{{/if}}
+<p style="text-align:right;color:olive"><i>Enviado por {{this.nick}} - {{this.idate}}</i></p>
+{{/each}}

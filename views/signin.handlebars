@@ -1,0 +1,20 @@
+<div class="container">
+  <center>
+    {{#if fail}}
+    <p style="font-size:11pt;text-align:center;color:red">{{fail}}</p>
+    {{/if}}
+    <a href="/passwordRecovery">¿Olvidaste tu contraseña?</a>
+    <br/>
+    <br/>
+    <form class="form-signin" method="POST" enctype="application/x-www-form-urlencoded" action="/login">
+      
+      <input id="nick" style="width:240px;" name="nick" class="form-control" placeholder="Nick" required></input>
+      <br/>
+      <input style="width:240px;" type="password" name="password" id="password" class="form-control" placeholder="Password" required></input>
+      <div class="checkbox">
+	<label><input type="checkbox" value="remember-me">Recuérdame</label>
+      </div>
+      <button style="width:240px;" class="btn btn-lg btn-primary btn-block" type="submit">Acceder</button>
+  </center>
+  </form>
+</div>

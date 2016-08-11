@@ -1,0 +1,16 @@
+<div class="container">
+    {{#if nick}}
+    <center>
+      <form action="" name="chat">
+        <input style="width:240px" id="message" name="message" class="form-control" placeholder="" 
+	       required></input>
+	<br/>
+	<!-- <input name="nick" id="nick" type="hidden" value="{{nick}}"/> -->
+	<button style="width:240px" id="submitmsg" name="submitmsg" 
+		class="btn btn-lg btn-primary btn-block" type="submit">Enviar</button>
+      </form>
+      <div id="chatbox"></div>
+    </center>
+    {{/if}}
+</div>
+<script src="/scripts.js"></script>
