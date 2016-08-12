@@ -28,6 +28,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser(credentials.cookieSecret));
 app.use(session({
     secret: credentials.cookieSecret,
+    cookie: {maxAge:7*24*3600*1000},
     proxy: true,
     resave: true,
     store: new fileStore,
