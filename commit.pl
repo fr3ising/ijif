@@ -20,8 +20,6 @@ my @files = qw("commit.pl"
 	       "sql/*.sql"
 	     );
 
-# "views/*.handlebars"
-
 foreach my $file ( @files ) {
   system("git add $file");
 }
