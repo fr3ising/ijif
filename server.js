@@ -40,11 +40,8 @@ app.use(function(req,res,next) {
     next();
 });
 
-infojobs.getOffers(function(err,rows) { });
-
 app.get('/',function(req,res) {
     req.session.fail = false;
-    infojobs.getOffers(function(err,rows) { });
     database.lastLinks(10,function(err,rows) {
 	res.render('home',{
 	    title:"ijif",
