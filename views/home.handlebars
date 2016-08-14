@@ -1,15 +1,16 @@
 <div class="container">
   {{#if nick}}
   <br/>
+  <script src="/searchScripts.js"></script>
 
-  <form class="form-signin" method="GET" enctype="application/x-www-form-urlencoded" action="/offers">
+  <form>
     <input id="q" style="width:240px;" name="q" class="form-control" placeholder="Términos de búsqueda" required></input>
     <br/>
-    <button style="width:240px;" class="btn btn-lg btn-primary btn-block" type="submit">
-
+    <button style="width:240px;" class="btn btn-lg btn-primary btn-block" 
+	    onclick="searchScript($('#q').val());" type="submit">
       <span class="glyphicon glyphicon-search" style="margin-right:30px"></span>Buscar en infojobs</button>
   </form>
-
+  
   <div id="offers">
   </div>
 

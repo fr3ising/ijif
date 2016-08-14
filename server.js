@@ -50,6 +50,14 @@ app.get('/',function(req,res) {
     });
 });
 
+app.get('/search',function(req,res) {
+    console.log("LKASJDKLASJD");
+    console.log(req.param('q'));
+    res.render('search',{
+	title:"ijif s",
+	nick: req.session.nick});
+});
+
 app.get('/changePassword',function(req,res) {
     res.render('changePassword',{
 	title:"Cambiar password",
