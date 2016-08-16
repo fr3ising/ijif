@@ -142,10 +142,8 @@ app.get('/chatDisplay',function(req,res) {
     });
 });
 
-app.get('/searchDisplay',function(req,res) {
-    console.log("SEARCHING");
-    infojobs.getOffers(req.params.q,function(err,offers) {
-	console.log(offers);
+app.get('/search',function(req,res) {
+    infojobs.getOffers(req.query.q,function(err,offers) {
 	res.render('searchResults',{
 	    offers: offers, layout: false});
     });
