@@ -50,13 +50,12 @@ app.get('/',function(req,res) {
     });
 });
 
-app.get('/search',function(req,res) {
-    console.log("LKASJDKLASJD");
-    console.log(req.param('q'));
-    res.render('search',{
-	title:"ijif s",
-	nick: req.session.nick});
-});
+// app.get('/search',function(req,res) {
+//     console.log(req.params.q);
+//     res.render('search',{
+// 	title:"ijif s",
+// 	nick: req.session.nick});
+// });
 
 app.get('/changePassword',function(req,res) {
     res.render('changePassword',{
@@ -140,6 +139,15 @@ app.get('/chatDisplay',function(req,res) {
 	res.render('chatbox',{
 	    nick: req.session.nick,
 	    chats: rows,layout: false});
+    });
+});
+
+app.get('/searchDisplay',function(req,res) {
+    console.log("SEARCHING");
+    infojobs.getOffers(req.params.q,function(err,offers) {
+	console.log(offers);
+	res.render('searchResults',{
+	    offers: offers, layout: false});
     });
 });
 

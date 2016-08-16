@@ -1,6 +1,6 @@
 function searchScript(q){  
     $.ajax({  
-        url: "/search",
+        url: "/searchDisplay",
 	data: { "q":q },
         cache: true,
         ifModified: true,
@@ -8,4 +8,4 @@ function searchScript(q){
             $("#offers").html(html);
         },  
     });  
-}  
+}
