@@ -50,13 +50,6 @@ app.get('/',function(req,res) {
     });
 });
 
-// app.get('/search',function(req,res) {
-//     console.log(req.params.q);
-//     res.render('search',{
-// 	title:"ijif s",
-// 	nick: req.session.nick});
-// });
-
 app.get('/changePassword',function(req,res) {
     res.render('changePassword',{
 	title:"Cambiar password",
@@ -144,6 +137,7 @@ app.get('/chatDisplay',function(req,res) {
 
 app.get('/search',function(req,res) {
     infojobs.getOffers(req.query.q,function(err,offers) {
+	console.log(offers);
 	res.render('searchResults',{
 	    offers: offers, layout: false});
     });

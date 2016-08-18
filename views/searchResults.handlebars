@@ -1,6 +1,17 @@
 <br/>
 {{#each offers}}
 {{#if this.title}}
-<p>{{this.title}}</p>
+<a href="{{this.link}}">{{this.title}}</a>
+<br/>{{this.city}} 
+{{#if this.salaryMin.value}}
+{{this.salaryMin.value}}
+{{/if}} -
+{{#if this.salaryMax.value}}
+{{this.salaryMax.value}}
+{{/if}}
+<br/>
+{{this.author.name}} - ({{this.applications}} candidatos)
+<br/>
+<br/>
 {{/if}}
 {{/each}}
