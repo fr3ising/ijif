@@ -43,10 +43,14 @@ app.use(function(req,res,next) {
 app.get('/',function(req,res) {
     req.session.fail = false;
     database.lastOffers(10,function(err,rows) {
-	res.render('home',{
-	    title:"ijif",
-	    nick: req.session.nick,
-	    offers: rows});
+	database.lastComments(10,function(err,crows) {
+	    res.render('home',{
+		title:"ijif",
+		nick: req.session.nick,
+		offers: rows,
+		comments: crows
+	    });
+	});
     });
 });
 

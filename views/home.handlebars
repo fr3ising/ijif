@@ -6,17 +6,25 @@
   <button style="width:240px;" class="btn btn-lg btn-primary btn-block" 
 	  onclick="searchScript($('#q').val());" type="submit">
     <span class="glyphicon glyphicon-search" style="margin-right:30px"></span>Buscar en infojobs</button>
-
   <div id="offers">
-    <h1>Consultadas recientemente</h1>
+    <h1 style="color:red">Consultadas recientemente:</h1>
     {{#each offers}}
     <h1><a href="/offer/{{this.id}}">{{this.title}}</a></h1>
     <p style="text-align:right;color:olive"><i>Consultada por {{this.nick}} - {{this.idate}}</i></p>
     {{/each}}
   </div>
 
+  <br/><br/>
 
-  
+  <div id="comments">
+    <h1 style="color:red">Últimos comentarios:</h1>
+    {{#each comments}}
+    <h1><a href="/offer/{{this.offer_id}}">{{this.comment}}</a></h1>
+    <p style="text-align:right;color:olive"><i>Por {{this.nick}} en {{this.title}} - {{this.idate}}</i></p>
+    {{/each}}
+  </div>
+
+
   <br/>
   <a href="/chat" style="width:240px;text-align:left" class="btn btn-success btn-lg">
     <span class="glyphicon glyphicon-fire" style="margin-right:30px"></span> Chat
