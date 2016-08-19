@@ -1,4 +1,5 @@
 function searchScript(q){  
+    $("#offers").html('<br/><img src="downloading.gif"/>');
     $.ajax({  
         url: "/search",
 	method: "GET",
