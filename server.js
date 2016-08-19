@@ -121,8 +121,8 @@ registerRoutes(app);
 var sendPasswordRoutes = require('./lib/sendPasswordRoutes.js');
 sendPasswordRoutes(app);
 
-// var postLinkRoutes = require('./lib/postLinkRoutes.js');
-// postLinkRoutes(app);
+var offerRoutes = require('./lib/offer.js');
+offerRoutes(app);
 
 // var postCommentRoutes = require('./lib/postCommentRoutes.js');
 // postCommentRoutes(app);
@@ -137,7 +137,6 @@ app.get('/chatDisplay',function(req,res) {
 
 app.get('/search',function(req,res) {
     infojobs.getOffers(req.query.q,function(err,offers) {
-	console.log(offers);
 	res.render('searchResults',{
 	    offers: offers, layout: false});
     });
@@ -208,5 +207,5 @@ app.use(function(req,res,next) {
 });
 
 app.listen(app.get('port'),server_ip_address,function() {
-    console.log('Express started on http://localhost'+app.get('port')+'; Press Ctrl-C to terminate.');
+    console.log('Express started on http://localhost:'+app.get('port')+'; Press Ctrl-C to terminate.');
 });

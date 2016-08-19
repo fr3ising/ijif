@@ -1,7 +1,11 @@
 <br/>
 {{#each offers}}
 {{#if this.title}}
-<a href="{{this.link}}">{{this.title}}</a>
+<form id="{{this.id}}" action="/storeOffer" method="post">
+  <input type="hidden" name="ijid" value="{{this.id}}" />
+  <a href="#" onclick="document.getElementById('{{this.id}}').submit();">{{this.title}}</a>
+</form>
+
 <br/>{{this.city}} 
 {{#if this.salaryMin.value}}
 {{this.salaryMin.value}}
@@ -11,6 +15,7 @@
 {{/if}}
 <br/>
 {{this.author.name}} - ({{this.applications}} candidatos)
+<br/>
 <br/>
 <br/>
 {{/if}}

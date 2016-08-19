@@ -3,6 +3,26 @@
 -- GRANT ALL PRIVILEGES ON freiworld.* TO 'freising'@'localhost';
 -- FLUSH PRIVILEGES;
 
+CREATE TABLE offers (
+       id INTEGER PRIMARY KEY AUTO_INCREMENT PRIMARY KEY,
+       ijid VARCHAR(255),
+       user_id INTEGER REFERENCES users(id),
+       published DATE,
+       minPay INTEGER,
+       maxPay INTEGER,
+       link VARCHAR(255),
+       studiesMin TEXT,
+       company TEXT,
+       city VARCHAR(255),
+       province VARCHAR(255),
+       minRequirements TEXT,
+       description TEXT,        
+       title CHAR(128) COLLATE utf8_spanish_ci NOT NULL DEFAULT '',
+       idate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+       karma DECIMAL(10,2) DEFAULT '7.00',
+       UNIQUE KEY ijid (ijid));
+
+
 -- DROP TABLE IF EXISTS users;
 CREATE TABLE users (
        id INTEGER PRIMARY KEY AUTO_INCREMENT PRIMARY KEY,
@@ -32,7 +52,7 @@ CREATE TABLE users (
 CREATE TABLE comments (
        id INTEGER PRIMARY KEY AUTO_INCREMENT PRIMARY KEY,
        user_id INTEGER REFERENCES users(id),
-       link_id INTEGER REFERENCES links(id),
+       offer_id INTEGER REFERENCES links(id),
        idate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
        comment TEXT,
        karma DECIMAL(10,2) DEFAULT '7.00');
