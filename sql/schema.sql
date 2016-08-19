@@ -53,7 +53,7 @@ CREATE TABLE users (
 CREATE TABLE comments (
        id INTEGER PRIMARY KEY AUTO_INCREMENT PRIMARY KEY,
        user_id INTEGER REFERENCES users(id),
-       offer_id INTEGER REFERENCES links(id),
+       offer_id INTEGER REFERENCES offers(id),
        idate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
        comment TEXT,
        karma DECIMAL(10,2) DEFAULT '7.00');

@@ -42,11 +42,11 @@ app.use(function(req,res,next) {
 
 app.get('/',function(req,res) {
     req.session.fail = false;
-    database.lastLinks(10,function(err,rows) {
+    database.lastOffers(10,function(err,rows) {
 	res.render('home',{
 	    title:"ijif",
 	    nick: req.session.nick,
-	    links: rows});
+	    offers: rows});
     });
 });
 
@@ -123,6 +123,9 @@ sendPasswordRoutes(app);
 
 var offerRoutes = require('./lib/offer.js');
 offerRoutes(app);
+
+var postCommentRoutes = require('./lib/postCommentRoutes.js');
+postCommentRoutes(app);
 
 // var postCommentRoutes = require('./lib/postCommentRoutes.js');
 // postCommentRoutes(app);

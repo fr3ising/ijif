@@ -1,1 +1,49 @@
-<a href="{{link}}">{{title}}</a>
+<div class="container">
+  <h1><a href="{{link}}">{{title}}</a></h1>
+  <br/>
+  <br/>
+  <center>{{city}} - {{province}}</center>
+  <br/>
+  {{company}}
+  <br/>
+  
+  {{#if minPay}}
+  <br/>
+  {{minPay}} € - {{maxPay}} €
+  <br/>
+  {{/if}}
+  
+  {{#if studiesMin}}
+  <br/>
+  {{studiesMin}}
+  <br/>
+  {{/if}}
+  
+  {{#if minRequirements}}
+  <br/>
+  {{minRequirements}}
+  <br/>
+  {{/if}}
+  
+  <br/>
+  <p><i>{{description}}</i></p>
+
+  <h1>Comentarios</h1>
+
+  {{#each comments}}
+  <p>{{this.comment}}</p>
+  <p style="text-align:right;color:olive"><i>Enviado por {{this.nick}} - {{this.idate}}</i></p>
+  <hr/>
+  {{/each}} 
+ 
+  {{#if nick}}
+  <form class="form-signin" method="POST" enctype="application/x-www-form-urlencoded" action="/postComment">
+    <input type="hidden" name="offerId" value="{{offerId}}"/>
+    <textarea style="width:240px" id="comment" name="comment" class="form-control" 
+	      placeholder="Comentario" rows="8" 
+	      required>{{linkComment}}</textarea>
+    <br/>
+    <button style="width:240px" class="btn btn-lg btn-primary btn-block" type="submit">Comentar</button>
+  </form>
+  {{/if}}
+</div>
