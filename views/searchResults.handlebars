@@ -1,9 +1,11 @@
 <br/>
+{{#if offers}}
 {{#each offers}}
 {{#if this.title}}
 <form id="{{this.id}}" action="/storeOffer" method="post">
   <input type="hidden" name="ijid" value="{{this.id}}" />
-  <h1><a href="#" onclick="document.getElementById('{{this.id}}').submit();">{{this.title}}</a></h1>
+  <a name="#{{this.id}}"></a>
+  <h1><a href="#{{this.id}}" onclick="document.getElementById('{{this.id}}').submit();">{{this.title}}</a></h1>
 </form>
 {{this.city}} 
 {{#if this.salaryMin.value}}
@@ -16,6 +18,8 @@
 {{this.author.name}} - ({{this.applications}} candidatos)
 <br/>
 <br/>
-<br/>
 {{/if}}
 {{/each}}
+{{else}}
+No se han encontrado resultados para: <i>{{q}}</i>
+{{/if}}

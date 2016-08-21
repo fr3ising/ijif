@@ -75,7 +75,7 @@ sessionRoutes(app);
 app.get('/search',function(req,res) {
     infojobs.getOffers(req.query.q,function(err,offers) {
 	res.render('searchResults',{
-	    offers: offers, layout: false});
+	    offers: offers, q: req.query.q, layout: false});
     });
 });
 

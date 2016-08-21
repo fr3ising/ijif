@@ -1,9 +1,7 @@
 <div class="container">
   <h1><a href="{{link}}">{{title}}</a></h1>
   <br/>
-  <br/>
   <center>{{city}} - {{province}}</center>
-  <br/>
   {{company}}
   <br/>
   
@@ -27,7 +25,8 @@
   
   <br/>
   <p><i>{{description}}</i></p>
-
+  <hr/>
+  {{#if comments}}
   <h1>Comentarios</h1>
 
   {{#each comments}}
@@ -35,7 +34,11 @@
   <p style="text-align:right;color:olive"><i>Enviado por {{this.nick}} - {{this.idate}}</i></p>
   <hr/>
   {{/each}} 
- 
+  {{else}}
+  <i style="color:olive">Esta oferta aún no tiene comentarios ¡Anímate y aporta el tuyo!</i><br/><br/>
+  {{/if}}
+
+
   {{#if nick}}
   <form class="form-signin" method="POST" enctype="application/x-www-form-urlencoded" action="/postComment">
     <input type="hidden" name="offerId" value="{{offerId}}"/>

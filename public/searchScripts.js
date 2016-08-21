@@ -1,4 +1,8 @@
-function searchScript(q){  
+function adjustContainerHeight(_height) {
+    $("#offers").animate({ height: _height}, 6000);
+}
+
+function searchScript(q) {  
     $("#offers").html('<br/><img src="downloading.gif"/>');
     $.ajax({  
         url: "/search",
@@ -9,6 +13,7 @@ function searchScript(q){
         ifModified: true,
         success: function(html){
 	    $("#offers").html(html);
+	    adjustContainerHeight($("#offers").height);
         }  
     });  
 }
