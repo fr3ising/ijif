@@ -54,9 +54,6 @@ app.get('/',function(req,res) {
     });
 });
 
-var sessionRoutes = require('./lib/sessionRoutes.js');
-sessionRoutes(app);
-
 var registerRoutes = require('./lib/registerRoutes.js');
 registerRoutes(app);
 
@@ -72,6 +69,8 @@ offerRoutes(app);
 var postCommentRoutes = require('./lib/postCommentRoutes.js');
 postCommentRoutes(app);
 
+var sessionRoutes = require('./lib/sessionRoutes.js');
+sessionRoutes(app);
 
 app.get('/search',function(req,res) {
     infojobs.getOffers(req.query.q,function(err,offers) {
