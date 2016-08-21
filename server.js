@@ -54,73 +54,14 @@ app.get('/',function(req,res) {
     });
 });
 
-app.get('/changePassword',function(req,res) {
-    res.render('changePassword',{
-	title:"Cambiar password",
-	nick: req.session.nick});
-});
-
-app.get('/chat',function(req,res) {
-    res.render('chat',{
-	title:"Chat de ijif",
-	nick: req.session.nick});
-});
-
-app.post('/postChat',function(req,res) {
-    database.insertChat(
-	req.body.message,req.session.nick,false,
-	function(err,rows) {
-	    if ( err ) {
-		res.redirect('500');
-	    } else {
-		res.end();
-	    }
-	});
-});
-
-app.post('/updatePassword',function(req,res) {
-    if ( req.body.password === req.body.rpassword ) {
-	database.updatePassword(req.session.nick,req.body.password,
-				function(err,rows) {
-				    res.render('home',{
-					title: "ijif",
-					nick: req.session.nick,
-					msg: "Password actualizado"});
-				});
-    } else {
-	res.render('changePassword',{title: "Cambiar password",
-				     nick: req.session.nick,
-				     fail: "Error: los passwords no coinciden"});
-    }
-});
-
-app.post('/login',function(req,res) {
-    database.signin(req.body.nick,req.body.password,function(err,rows){
-	if ( rows && rows.length > 0 ) {
-	    if ( rows[0].nick === req.body.nick ) {
-		req.session.nick = rows[0].nick;
-		req.session.fail = false;
-		req.session.save(function(err) {
-		    res.redirect('/');
-		});
-	    }
-	} else {
-	    req.session.nick = null;
-	    req.session.fail = "Fallo al acceder, comprueba nickname y password";
-	    req.session.save(function(err) {
-		res.redirect('/signin');
-	    });
-	}
-    });
-});
-
-app.get('/passwordRecovery',function(req,res) {
-    req.session.fail = false;
-    res.render('passwordRecovery',{ title: "Password recovery" });
-});
+var sessionRoutes = require('./lib/sessionRoutes.js');
+sessionRoutes(app);
 
 var registerRoutes = require('./lib/registerRoutes.js');
 registerRoutes(app);
+
+var chatRoutes = require('./lib/chatRoutes.js');
+chatRoutes(app);
 
 var sendPasswordRoutes = require('./lib/sendPasswordRoutes.js');
 sendPasswordRoutes(app);
@@ -131,63 +72,12 @@ offerRoutes(app);
 var postCommentRoutes = require('./lib/postCommentRoutes.js');
 postCommentRoutes(app);
 
-// var postCommentRoutes = require('./lib/postCommentRoutes.js');
-// postCommentRoutes(app);
-
-app.get('/chatDisplay',function(req,res) {
-    database.lastChats(30,function(err,rows) {
-	res.render('chatbox',{
-	    nick: req.session.nick,
-	    chats: rows,layout: false});
-    });
-});
 
 app.get('/search',function(req,res) {
     infojobs.getOffers(req.query.q,function(err,offers) {
 	res.render('searchResults',{
 	    offers: offers, layout: false});
     });
-});
-
-app.get('/link/:id',function(req,res) {
-    database.linkById(req.params.id,function(err,info) {
-	if ( !err ) {
-	    rows = info.rows;
-	    res.render('link',{ title: rows[0].title,
-				linkTitle: rows[0].title,
-				uri: rows[0].uri,
-				comment: rows[0].comment,
-				linkNick: rows[0].nick,
-				fail:false,
-				linkId: rows[0].id,
-				idate:rows[0].idate,
-				nick: req.session.nick,
-				comments: info.comments
-			      });
-	} else {
-	    res.redirect('500');
-	}
-    });
-});
-
-app.get('/sendLink',function(req,res) {
-    res.render('sendLink',{ title: 'Enviar noticia',fail:false,nick:req.session.nick});
-});
-
-app.get('/signout',function(req,res) {
-    req.session.nick = null;
-    req.session.fail = false;
-    req.session.save(function(err) {
-	res.redirect('/');
-    });
-});
-
-app.get('/signin',function(req,res) {
-    res.render('signin',{title:'Entrar a ijif',fail:req.session.fail});
-});
-
-app.get('/signup',function(req,res) {
-    res.render('signup',{title:'Signup en ijif',fail:req.session.fail});
 });
 
 app.get('/about',function(req,res) {
