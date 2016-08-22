@@ -80,7 +80,6 @@ app.get('/search',function(req,res) {
 });
 
 app.get('/about',function(req,res) {
-    console.log(req.session.nick);
     res.render('about',{
 	title: "About ijif",
 	fortune: fortune.getFortune(),
