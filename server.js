@@ -44,11 +44,14 @@ app.get('/',function(req,res) {
     req.session.fail = false;
     database.lastOffers(10,function(err,rows) {
 	database.lastComments(10,function(err,crows) {
-	    res.render('home',{
-		title:"ijif",
-		nick: req.session.nick,
-		offers: rows,
-		comments: crows
+	    database.lastSearches(10,function(err,searches) {
+		res.render('home',{
+		    title:"ijif",
+		    nick: req.session.nick,
+		    offers: rows,
+		    comments: crows,
+		    searches: searches
+		});
 	    });
 	});
     });
@@ -77,6 +80,9 @@ app.get('/search',function(req,res) {
 	res.render('searchResults',{
 	    offers: offers, q: req.query.q, layout: false});
     });
+    if ( req.session.nick ) {
+	database.insertSearch(req.query.q,req.session.nick);
+    }
 });
 
 app.get('/about',function(req,res) {

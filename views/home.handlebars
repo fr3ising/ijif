@@ -1,6 +1,7 @@
 <div class="container">
   {{#if nick}}
   <br/>
+  <a name="searchForm"></a>
   <input id="q" style="width:240px;" name="q" class="form-control" placeholder="Términos de búsqueda" required></input>
   <br/>
   <button style="width:240px;" class="btn btn-lg btn-primary btn-block" 
@@ -11,6 +12,16 @@
     {{#each offers}}
     <h1><a href="/offer/{{this.id}}">{{this.title}}</a></h1>
     <p style="text-align:right;color:olive"><i>Consultada por {{this.nick}} - {{this.idate}}</i></p>
+    {{/each}}
+  </div>
+
+  <br/><br/>
+
+  <div id="searches">
+    <h1 style="color:red">Últimas búsquedas:</h1>
+    {{#each searches}}
+    <h1><a href="#searchForm" onclick="$('#q').val('{{this.keywords}}')">{{this.keywords}}</a></h1>
+    <p style="text-align:right;color:olive"><i>Por {{this.nick}} - {{this.idate}}</i></p>
     {{/each}}
   </div>
 
