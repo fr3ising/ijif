@@ -111,7 +111,7 @@ app.get('/pay',function(req,res) {
 	var payString = '';
 	if ( payOffers > 0 ) {
 	    if ( req.query.q.length > 0 ) {
-		payString = "El salario medio para las ofertas \""+req.query.q+
+		payString = "El salario medio para las ofertas de \""+req.query.q+
 		    "\" es de "+aux.intToCash(payAcum/payOffers)+" ("+payOffers+" ofertas analizadas)";
 	    } else {
 		payString = "El salario medio es de "+aux.intToCash(payAcum/payOffers)+" ("+payOffers+" ofertas analizadas)";
