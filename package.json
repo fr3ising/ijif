@@ -34,7 +34,8 @@
     "nodemailer": "^2.4.2",
     "request": "^2.72.0",
     "session-file-store": "^0.2.0",
-    "twitter": "^1.4.0"
+    "twitter": "^1.4.0",
+    "format-number": "~2.0.1"
   },
   "devDependencies": {},
   "bundleDependencies": [],

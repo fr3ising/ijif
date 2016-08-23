@@ -7,6 +7,13 @@
   <button style="width:240px;" class="btn btn-lg btn-primary btn-block" 
 	  onclick="searchScript($('#q').val());" type="submit">
     <span class="glyphicon glyphicon-search" style="margin-right:30px"></span>Buscar en infojobs</button>
+  <br/>
+  <button style="width:240px;" class="btn btn-lg btn-success primary btn-block" 
+	  onclick="payScript($('#q').val());" type="submit">
+    <span class="glyphicon glyphicon-euro" style="margin-right:30px"></span>Media de salarios</button>
+  
+  <div id="pays"></div>
+
   <div id="offers">
     <h1 style="color:red">Consultadas recientemente:</h1>
     {{#each offers}}

@@ -17,3 +17,18 @@ function searchScript(q) {
         }  
     });  
 }
+
+function payScript(q) {  
+    $("#pays").html('<br/><img src="downloading.gif"/>');
+    $.ajax({  
+        url: "/pay",
+	method: "GET",
+	data: { q:q },
+	dataType: 'html',
+        cache: true,
+        ifModified: true,
+        success: function(html){
+	    $("#pays").html(html);
+        }  
+    });  
+}
