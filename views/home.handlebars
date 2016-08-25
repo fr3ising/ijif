@@ -2,7 +2,6 @@
 
   {{#if nick}}
 
-  <br/>
   <a name="searchForm"></a>
   <input id="q" style="width:240px;" name="q" class="form-control" placeholder="Términos de búsqueda" required></input>
   <br/>
@@ -17,22 +16,22 @@
   <div id="pays"></div>
 
   <div id="offers">
-    <!-- <h1 style="color:red">Consultadas recientemente:</h1> -->
+    <h1 style="color:olive"><i>Consultadas recientemente:</i></h1>
     {{#each offers}}
     <h1><a href="/offer/{{this.id}}">{{this.title}}</a></h1>
     <p style="text-align:right;color:olive"><i>Consultada por {{this.nick}} - {{this.idate}}</i></p>
     {{/each}}
   </div>
   
-  <br/><br/>
+  <br/>
   
 
 
-  <br/>
-  <a href="/chat" style="width:240px;text-align:left" class="btn btn-success btn-lg">
-    <span class="glyphicon glyphicon-fire" style="margin-right:30px"></span> Chat
-  </a>
-  <br/>
+  <!-- <br/> -->
+  <!-- <a href="/chat" style="width:240px;text-align:left" class="btn btn-success btn-lg"> -->
+  <!--   <span class="glyphicon glyphicon-fire" style="margin-right:30px"></span> Chat -->
+  <!-- </a> -->
+  <!-- <br/> -->
 
   <!-- <a href="/sendLink" style="width:240px;text-align:left" class="btn btn-primary btn-lg"> -->
   <!--   <span class="glyphicon glyphicon-send" style="margin-right:30px"></span> Enviar link -->

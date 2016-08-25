@@ -1,8 +1,6 @@
 <div class="container">
 
   {{#if nick}}
-
-  <br/>
   <a name="searchForm"></a>
   <input id="q" style="width:240px;" name="q" class="form-control" placeholder="Términos de búsqueda" required></input>
   <br/>
@@ -15,11 +13,11 @@
     <span class="glyphicon glyphicon-euro" style="margin-right:30px"></span>Media de salarios</button>
   
   <div id="pays"></div>
+
   <div id="offers"></div>
 
-
   <div id="comments">
-    <!-- <h1 style="color:red">Últimos comentarios:</h1> -->
+    <h1 style="color:olive"><i>Últimos comentarios:</i></h1>
     {{#each comments}}
     <h1><a href="/offer/{{this.offer_id}}">{{this.comment}}</a></h1>
     <p style="text-align:right;color:olive"><i>Por {{this.nick}} en {{this.title}} - {{this.idate}}</i></p>
@@ -41,4 +39,3 @@
   {{content}}
 </div>
 <script src="/searchScripts.js"></script>
-
