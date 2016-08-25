@@ -45,16 +45,32 @@ app.use(function(req,res,next) {
 app.get('/',function(req,res) {
     req.session.fail = false;
     database.lastOffers(10,function(err,rows) {
-	database.lastComments(10,function(err,crows) {
-	    database.lastSearches(10,function(err,searches) {
-		res.render('home',{
-		    title:"ijif",
-		    nick: req.session.nick,
-		    offers: rows,
-		    comments: crows,
-		    searches: searches
-		});
-	    });
+	res.render('home',{
+	    title:"ijif",
+	    nick: req.session.nick,
+	    offers: rows,
+	});
+    });
+});
+
+app.get('/searches',function(req,res) {
+    req.session.fail = false;
+    database.lastSearches(10,function(err,searches) {
+	res.render('searches',{
+	    title:"ijif",
+	    nick: req.session.nick,
+	    searches: searches
+	});
+    });
+});
+
+app.get('/comments',function(req,res) {
+    req.session.fail = false;
+    database.lastComments(10,function(err,comments) {
+	res.render('comments',{
+	    title:"ijif",
+	    nick: req.session.nick,
+	    comments: comments
 	});
     });
 });
@@ -77,6 +93,9 @@ postCommentRoutes(app);
 var sessionRoutes = require('./lib/sessionRoutes.js');
 sessionRoutes(app);
 
+var payRoutes = require('./lib/payRoutes.js');
+payRoutes(app);
+
 app.get('/search',function(req,res) {
     infojobs.getOffers(req.query.q,maxResults,function(err,offers) {
 	res.render('searchResults',{
@@ -85,42 +104,6 @@ app.get('/search',function(req,res) {
     if ( req.session.nick ) {
 	database.insertSearch(req.query.q,req.session.nick);
     }
-});
-
-app.get('/pay',function(req,res) {
-    infojobs.getOffers(req.query.q,10*maxResults,function(err,offers) {
-	var payOffers = 0;
-	var payAcum = 0;
-	for(var i=0;i<offers.length;i++) {
-	    var n = 0;
-	    var acum = 0;
-	    if ( offers[i]['salaryMin']['value'].length > 0 ) {
-		acum += aux.payToInt(offers[i]['salaryMin']['value']);
-		n++;
-	    }
-	    if ( offers[i]['salaryMax']['value'].length > 0 ) {
-		acum += aux.payToInt(offers[i]['salaryMax']['value']);
-		n++;
-	    }
-	    if ( n > 0 ) {
-		var mean = acum*aux.periodToInt(offers[i]['salaryPeriod']['value'])/n;
-		payOffers++;
-		payAcum += mean;
-	    }
-	}
-	var payString = '';
-	if ( payOffers > 0 ) {
-	    if ( req.query.q.length > 0 ) {
-		payString = "El salario medio para las ofertas de \""+req.query.q+
-		    "\" es de "+aux.intToCash(payAcum/payOffers)+" ("+payOffers+" ofertas analizadas)";
-	    } else {
-		payString = "El salario medio es de "+aux.intToCash(payAcum/payOffers)+" ("+payOffers+" ofertas analizadas)";
-	    }
-	} else {
-	    payString = 'No se han encontrado ofertas';
-	}
-	res.render('payResults',{ mean: payString, layout: false });
-    });
 });
 
 app.get('/about',function(req,res) {

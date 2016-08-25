@@ -1,7 +1,5 @@
 <div class="container">
-
   {{#if nick}}
-
   <br/>
   <a name="searchForm"></a>
   <input id="q" style="width:240px;" name="q" class="form-control" placeholder="Términos de búsqueda" required></input>
@@ -15,28 +13,18 @@
     <span class="glyphicon glyphicon-euro" style="margin-right:30px"></span>Media de salarios</button>
   
   <div id="pays"></div>
+  <div id="offers"></div>
 
-  <div id="offers">
-    <!-- <h1 style="color:red">Consultadas recientemente:</h1> -->
-    {{#each offers}}
-    <h1><a href="/offer/{{this.id}}">{{this.title}}</a></h1>
-    <p style="text-align:right;color:olive"><i>Consultada por {{this.nick}} - {{this.idate}}</i></p>
+
+  <div id="searches">
+    <!-- <h1 style="color:red">Últimas búsquedas:</h1> -->
+    {{#each searches}}
+    <h1><a href="#searchForm" onclick="$('#q').val('{{this.keywords}}')">{{this.keywords}}</a></h1>
+    <p style="text-align:right;color:olive"><i>Por {{this.nick}} - {{this.idate}}</i></p>
     {{/each}}
   </div>
-  
+
   <br/><br/>
-  
-
-
-  <br/>
-  <a href="/chat" style="width:240px;text-align:left" class="btn btn-success btn-lg">
-    <span class="glyphicon glyphicon-fire" style="margin-right:30px"></span> Chat
-  </a>
-  <br/>
-
-  <!-- <a href="/sendLink" style="width:240px;text-align:left" class="btn btn-primary btn-lg"> -->
-  <!--   <span class="glyphicon glyphicon-send" style="margin-right:30px"></span> Enviar link -->
-  <!-- </a> -->
   {{else}}
   <br/>
   <a href="/signin" style="width:240px;text-align:left" class="btn btn-primary btn-lg">
@@ -48,8 +36,4 @@
     <span class="glyphicon glyphicon-hand-up" style="margin-right:30px"></span> Registrarse
   </a>
   {{/if}}
-  {{content}}
 </div>
-<script src="/searchScripts.js"></script>
-
-
