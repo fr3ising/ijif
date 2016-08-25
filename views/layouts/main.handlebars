@@ -17,6 +17,15 @@
       <center><p style="font-size:11pt;text-align:center;color:olive">{{msg}}</p>
       </center>
       {{/if}}
+
+      <div class="nav nav-pills">
+	<li><a id="inicio" href="/">Inicio</a></li>
+	<li><a id="chat" href="/chat">Chat</a></li>
+	<li><a id="comentarios" href="/chat">Comentarios</a></li>
+	<li><a id="busquedas" href="/chat">Búsquedas</a></li>
+      </div>
+
+
       {{{body}}}
     </div>
     <br/>
@@ -37,6 +46,8 @@
     {{/if}}
     <script>mocha.run();</script>
     {{/if}}
+    
+    <script src="/gscripts.js"></script>
     <!-- <script> -->
     <!--   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ -->
     <!--   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), -->
