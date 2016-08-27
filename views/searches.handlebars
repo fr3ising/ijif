@@ -19,10 +19,11 @@
   <br/>
   {{#if cloud}}
   <div class="tag">
-    <p>{{{cloud}}}</p>
+    {{{cloud}}}
   </div>
   {{/if}}
 
+  {{#if searches}}
   <div id="searches">
     <h1 style="color:olive"><i>Últimas búsquedas:</i></h1>
     {{#each searches}}
@@ -32,6 +33,7 @@
     {{/if}}
     {{/each}}
   </div>
+  {{/if}}
 
   <br/><br/>
   {{else}}

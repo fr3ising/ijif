@@ -16,14 +16,12 @@
   <div id="pays"></div>
 
   <div id="offers">
-    <h1 style="color:olive"><i>Consultadas recientemente:</i></h1>
+    <!-- <h1 style="color:olive"><i>Consultadas recientemente:</i></h1> -->
     {{#each offers}}
     <h1><a href="/offer/{{this.id}}">{{this.title}}</a></h1>
     <p style="text-align:right;color:olive"><i>Consultada por {{this.nick}} - {{this.idate}}</i></p>
     {{/each}}
   </div>
-  
-  <br/>
   
 
 
