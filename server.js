@@ -56,7 +56,7 @@ app.get('/',function(req,res) {
 
 app.get('/searches',function(req,res) {
     req.session.fail = false;
-    database.lastSearches(50,function(err,searches) {
+    database.lastSearches(100,function(err,searches) {
 	var tags = {};
 	for(var i=0;i<searches.length;i++) {
 	    if ( searches[i]['keywords'] ) {
