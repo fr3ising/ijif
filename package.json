@@ -35,7 +35,8 @@
     "request": "^2.72.0",
     "session-file-store": "^0.2.0",
     "twitter": "^1.4.0",
-    "format-number": "~2.0.1"
+    "format-number": "~2.0.1",
+    "tag-cloud": "~1.1.2"
   },
   "devDependencies": {},
   "bundleDependencies": [],

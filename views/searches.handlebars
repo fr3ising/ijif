@@ -16,6 +16,12 @@
 
   <div id="offers"></div>
 
+  {{#if cloud}}
+  <div class="tag">
+    {{{cloud}}}
+  </div>
+  {{/if}}
+
   <div id="searches">
     <h1 style="color:olive"><i>Últimas búsquedas:</i></h1>
     {{#each searches}}

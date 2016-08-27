@@ -12,6 +12,7 @@ var database = require('./lib/database.js');
 var infojobs = require('./lib/infojobs.js');
 var formidable = require('formidable');
 var format = require('format-number');
+var tagCloud = require('tag-cloud');
 
 var server_port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
@@ -55,11 +56,35 @@ app.get('/',function(req,res) {
 
 app.get('/searches',function(req,res) {
     req.session.fail = false;
-    database.lastSearches(10,function(err,searches) {
-	res.render('searches',{
-	    title:"ijif",
-	    nick: req.session.nick,
-	    searches: searches
+    database.lastSearches(300,function(err,searches) {
+	var tags = {};
+	for(var i=0;i<searches.length;i++) {
+	    if ( searches[i]['keywords'] ) {
+		if ( tags.hasOwnProperty(searches[i]['keywords']) ) {
+		    tags[searches[i]['keywords']]++;
+		} else {
+		    tags[searches[i]['keywords']]=1;
+		}
+	    }
+	}
+	var tagsArray = [];
+	Object.keys(tags).forEach(function(key,index) {
+	    tagsArray.push({tagName: key,count: tags[key]});
+	});
+	var cloud = ""
+	tagCloud.tagCloud(tagsArray, function (err, data) {
+	    cloud = data;
+	    res.render('searches',{
+		title:"ijif",
+		cloud: cloud,
+		nick: req.session.nick,
+		searches: searches
+	    });
+
+	}, {
+	    randomize: false,
+	    classPrefix: 'tag',
+	    additionalAttributes: { onclick: "$('#q').val('{{tag}}')" }
 	});
     });
 });
