@@ -83,7 +83,7 @@ app.get('/searches',function(req,res) {
 	}, {
 	    randomize: false,
 	    classPrefix: 'tag',
-	    additionalAttributes: { onclick: "$('#q').val('{{tag}}')" }
+	    additionalAttributes: { onclick: "$('#q').val('{{tag}}');searchScript($('#q').val());" }
 	});
     });
 });
