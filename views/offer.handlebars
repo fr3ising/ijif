@@ -30,6 +30,7 @@
   <h1>Comentarios</h1>
 
   {{#each comments}}
+  <a name="c{{this.id}}"></a>
   <p>{{this.comment}}</p>
   <p style="text-align:right;color:olive"><i>Enviado por {{this.nick}} - {{this.idate}}</i></p>
   <hr/>

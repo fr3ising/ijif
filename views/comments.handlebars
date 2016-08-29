@@ -19,7 +19,7 @@
   <div id="comments">
     <!-- <h1 style="color:olive"><i>Últimos comentarios:</i></h1> -->
     {{#each comments}}
-    <h1><a href="/offer/{{this.offer_id}}">{{this.comment}}</a></h1>
+    <h1><a href="/offer/{{this.offer_id}}/#c{{this.id}}">{{this.comment}}</a></h1>
     <p style="text-align:right;color:olive"><i>Por {{this.nick}} en {{this.title}} - {{this.idate}}</i></p>
     {{/each}}
   </div>
