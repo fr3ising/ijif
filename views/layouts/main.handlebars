@@ -2,7 +2,11 @@
 <html>
   <head>
     <title>{{title}}</title>
-    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Baloo+Chettan" rel="stylesheet"> -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
     <link href="/style/main.css" rel="stylesheet">
     {{#if showTests}}
     <link href="/vendor/mocha.css" rel="stylesheet">
@@ -17,16 +21,31 @@
       <center><p style="font-size:11pt;text-align:center;color:olive">{{msg}}</p>
       </center>
       {{/if}}
-
-     {{#if nick}}
-      <div class="nav nav-pills">
-	<li><a id="inicio" href="/">Inicio</a></li>
-	<li><a id="chat" href="/chat">Chat</a></li>
-	<li><a id="comentarios" href="/comments">Comentarios</a></li>
-	<li><a id="busquedas" href="/searches">Búsquedas</a></li>
-      </div>
-     {{/if}}
-
+      
+      <center>
+      <table style="width:240px">
+	<tr>
+	  <td style="align:left">
+	    {{#if nick}}
+	    <div class="dropdown" style="margin-right:0px;vertical-align:middle">
+	      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+		<span class="caret"></span></button>
+	      <ul class="dropdown-menu">
+      		<li><a id="inicio" href="/">Inicio</a></li>
+      		<li><a id="chat" href="/chat">Chat</a></li>
+      		<li><a id="comentarios" href="/comments">Comentarios</a></li>
+      		<li><a id="busquedas" href="/searches">Búsquedas</a></li>
+	      </ul>
+	    </div>
+	  {{/if}}
+	  </td>
+	  <td style="align:right">
+	    <a href="/"><img src="./small.png"/></a>
+	  </td>
+	</tr>
+      </table>
+      </center>
+	    
       <br/>
       {{{body}}}
 
@@ -63,6 +82,7 @@
     <script>mocha.run();</script>
     {{/if}}
     
+    <script src="./gscripts.js"></script>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
