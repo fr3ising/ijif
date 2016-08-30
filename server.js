@@ -46,7 +46,6 @@ app.use(function(req,res,next) {
 app.get('/',function(req,res) {
     req.session.fail = false;
     database.countOffers(function(err,count) {
-	console.log(count);
 	database.pagingOffers(10,0,function(err,rows) {
 	    res.render('home',{
 		title:"ijif",
