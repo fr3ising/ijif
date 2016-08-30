@@ -22,37 +22,30 @@
       </center>
       {{/if}}
       
-      <center>
-      <table style="width:240px">
-	<tr>
-	  <td style="align:left">
-	    {{#if nick}}
-	    <div class="dropdown" style="margin-right:0px;vertical-align:middle">
-	      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-		<span class="caret"></span></button>
-	      <ul class="dropdown-menu">
-      		<li><a id="inicio" style="color:red" href="/">
-		    <span class="glyphicon glyphicon-home" style="margin-right:30px"></span>
-		    Inicio</a></li>
-      		<li><a id="chat" style="color:purple;margin-top:5px" href="/chat">
-		    <span class="glyphicon glyphicon-fire" style="margin-right:30px"></span>
-		    Chat</a></li>
-      		<li><a id="comentarios" style="color:blue;margin-top:5px" href="/comments">
-		    <span class="glyphicon glyphicon-pencil" style="margin-right:30px"></span>
-		    Comentarios</a></li>
-      		<li><a id="busquedas" style="color:green;margin-top:5px" href="/searches">
-		    <span class="glyphicon glyphicon-search" style="margin-right:30px"></span>
-		    Búsquedas</a></li>
-	      </ul>
-	    </div>
-	  {{/if}}
-	  </td>
-	  <td align="right">
-	    <a href="/"><img style="right:100px" src="/label.png"/></a>
-	  </td>
-	</tr>
-      </table>
-      </center>
+      <a href="/"><img alt="forocurro.com" style="right:100px" src="/foro.png"/></a>
+
+      <div class="nav nav-pills" style="position:relative;right:-10px;font-size:8pt;">
+      	<li><a id="inicio" style="color:red" href="/">
+	    <span class="glyphicon glyphicon-home" style="margin-right:0px"></span>
+	    Inicio</a></li>
+	{{#if nick}}
+      	<li><a id="chat" style="color:purple;margin-top:0px" href="/chat">
+	    <span class="glyphicon glyphicon-fire" style="margin-right:0px"></span>
+	    Chat</a></li>
+      	<li><a id="comentarios" style="color:blue;margin-top:0px" href="/comments">
+	    <span class="glyphicon glyphicon-pencil" style="margin-right:0px"></span>
+	    Comentarios</a></li>
+      	<li><a id="busquedas" style="color:green;margin-top:0px" href="/searches">
+	    <span class="glyphicon glyphicon-tag" style="margin-right:0px"></span>
+	    Nube</a></li>
+	{{/if}}
+      	<li><a id="acerca" style="color:orange;margin-top:0px" href="/about">
+	    <span class="glyphicon glyphicon-flag" style="margin-right:0px"></span>
+	    Acerca</a></li>
+      	<li><a id="terminos" style="color:olive;margin-top:0px" href="/terms">
+	    <span class="glyphicon glyphicon-thumbs-up" style="margin-right:0px"></span>
+	    Términos</a></li>
+      </div>
 	    
       <br/>
       {{{body}}}
