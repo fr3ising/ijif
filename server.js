@@ -46,11 +46,36 @@ app.use(function(req,res,next) {
 app.get('/',function(req,res) {
     req.session.fail = false;
     database.countOffers(function(err,count) {
+	moreOffers = false;
+	if ( count > 10 ) {
+	    moreOffers = 1;
+	}
 	database.pagingOffers(10,0,function(err,rows) {
 	    res.render('home',{
 		title:"ijif",
 		nick: req.session.nick,
 		offers: rows,
+		moreOffers: moreOffers
+	    });
+	});
+    });
+});
+
+app.get('/offers',function(req,res) {
+    req.session.fail = false;
+    database.countOffers(function(err,count) {
+	moreOffers = false;
+	console.log(count);
+	console.log(parseInt(req.query.p)*10);
+	if ( count > parseInt(req.query.p)*10 ) {
+	    moreOffers = req.query.p+1;
+	}
+	database.pagingOffers(10,parseInt(req.query.p)*10,function(err,rows) {
+	    res.render('offers',{
+		title:"ijif",
+		nick: req.session.nick,
+		offers: rows,
+		layout: false,
 	    });
 	});
     });

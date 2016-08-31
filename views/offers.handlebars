@@ -1,0 +1,6 @@
+{{#if nick}}
+{{#each offers}}
+<h1><a href="/offer/{{this.id}}">{{this.title}}</a></h1>
+<p style="text-align:right;color:olive"><i>Consultada por {{this.nick}} - {{this.idate}}</i></p>
+{{/each}}
+{{/if}}

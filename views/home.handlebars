@@ -22,8 +22,15 @@
     <p style="text-align:right;color:olive"><i>Consultada por {{this.nick}} - {{this.idate}}</i></p>
     {{/each}}
   </div>
-  
 
+{{#if moreOffers}}
+  <input type="hidden" value="{{moreOffers}}" id="offset"/>
+  <button style="width:240px;" class="btn btn-lg btn-primary btn-block" 
+	  onclick="moreOffers($('#offset').val());">
+    ofertas anteriores ...</button>
+
+{{/if}}
+  
 
   <!-- <br/> -->
   <!-- <a href="/chat" style="width:240px;text-align:left" class="btn btn-success btn-lg"> -->
@@ -48,5 +55,6 @@
   {{content}}
 </div>
 <script src="/searchScripts.js"></script>
+<script src="/gscripts.js"></script>
 
 
