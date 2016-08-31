@@ -55,31 +55,31 @@ app.get('/',function(req,res) {
 		title:"ijif",
 		nick: req.session.nick,
 		offers: rows,
-		moreOffers: moreOffers
+		moreOffers: false
 	    });
 	});
     });
 });
 
-app.get('/offers',function(req,res) {
-    req.session.fail = false;
-    database.countOffers(function(err,count) {
-	moreOffers = false;
-	console.log(count);
-	console.log(parseInt(req.query.p)*10);
-	if ( count > parseInt(req.query.p)*10 ) {
-	    moreOffers = req.query.p+1;
-	}
-	database.pagingOffers(10,parseInt(req.query.p)*10,function(err,rows) {
-	    res.render('offers',{
-		title:"ijif",
-		nick: req.session.nick,
-		offers: rows,
-		layout: false,
-	    });
-	});
-    });
-});
+// app.get('/offers',function(req,res) {
+//     req.session.fail = false;
+//     database.countOffers(function(err,count) {
+// 	moreOffers = false;
+// 	console.log(count);
+// 	console.log(parseInt(req.query.p)*10);
+// 	if ( count > parseInt(req.query.p)*10 ) {
+// 	    moreOffers = req.query.p+1;
+// 	}
+// 	database.pagingOffers(10,parseInt(req.query.p)*10,function(err,rows) {
+// 	    res.render('offers',{
+// 		title:"ijif",
+// 		nick: req.session.nick,
+// 		offers: rows,
+// 		layout: false,
+// 	    });
+// 	});
+//     });
+// });
 
 app.get('/searches',function(req,res) {
     req.session.fail = false;
