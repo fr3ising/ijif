@@ -166,6 +166,15 @@ app.get('/about',function(req,res) {
     });
 });
 
+app.get('/terms',function(req,res) {
+    res.render('terms',{
+	title: "Términos",
+	fortune: fortune.getFortune(),
+	pageTestScript: "/qa/about-tests.js",
+	nick: req.session.nick
+    });
+});
+
 app.use(express.static(__dirname+'/public'));
 
 app.use(function(req,res,next) {
