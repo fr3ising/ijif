@@ -61,25 +61,25 @@ app.get('/',function(req,res) {
     });
 });
 
-// app.get('/offers',function(req,res) {
-//     req.session.fail = false;
-//     database.countOffers(function(err,count) {
-// 	moreOffers = false;
-// 	console.log(count);
-// 	console.log(parseInt(req.query.p)*10);
-// 	if ( count > parseInt(req.query.p)*10 ) {
-// 	    moreOffers = req.query.p+1;
-// 	}
-// 	database.pagingOffers(10,parseInt(req.query.p)*10,function(err,rows) {
-// 	    res.render('offers',{
-// 		title:"ijif",
-// 		nick: req.session.nick,
-// 		offers: rows,
-// 		layout: false,
-// 	    });
-// 	});
-//     });
-// });
+app.get('/offers',function(req,res) {
+    req.session.fail = false;
+    database.countOffers(function(err,count) {
+	moreOffers = false;
+	console.log(count);
+	console.log(parseInt(req.query.p)*10);
+	if ( count > parseInt(req.query.p)*10 ) {
+	    moreOffers = req.query.p+1;
+	}
+	database.pagingOffers(10,parseInt(req.query.p)*10,function(err,rows) {
+	    res.render('offers',{
+		title:"ijif",
+		nick: req.session.nick,
+		offers: rows,
+		layout: false,
+	    });
+	});
+    });
+});
 
 app.get('/searches',function(req,res) {
     req.session.fail = false;
@@ -160,6 +160,15 @@ app.get('/search',function(req,res) {
 app.get('/about',function(req,res) {
     res.render('about',{
 	title: "About ijif",
+	fortune: fortune.getFortune(),
+	pageTestScript: "/qa/about-tests.js",
+	nick: req.session.nick
+    });
+});
+
+app.get('/terms',function(req,res) {
+    res.render('terms',{
+	title: "Términos",
 	fortune: fortune.getFortune(),
 	pageTestScript: "/qa/about-tests.js",
 	nick: req.session.nick
