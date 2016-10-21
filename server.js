@@ -128,7 +128,6 @@ app.get('/comments',function(req,res) {
 
 var ricardoRoutes = require('./routes/ricardo.js');
 ricardoRoutes(app);
-app.use('/ricardo',ricardoRoutes)
 
 var registerRoutes = require('./lib/registerRoutes.js');
 registerRoutes(app);
