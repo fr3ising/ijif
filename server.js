@@ -126,6 +126,10 @@ app.get('/comments',function(req,res) {
     });
 });
 
+var ricardoRoutes = require('./routes/ricardo.js');
+ricardoRoutes(app);
+app.use('/ricardo',ricardoRoutes)
+
 var registerRoutes = require('./lib/registerRoutes.js');
 registerRoutes(app);
 
@@ -137,6 +141,7 @@ sendPasswordRoutes(app);
 
 var offerRoutes = require('./lib/offer.js');
 offerRoutes(app);
+
 
 var postCommentRoutes = require('./lib/postCommentRoutes.js');
 postCommentRoutes(app);
@@ -156,6 +161,7 @@ app.get('/search',function(req,res) {
 	database.insertSearch(req.query.q,req.session.nick);
     }
 });
+
 
 app.get('/about',function(req,res) {
     res.render('about',{
