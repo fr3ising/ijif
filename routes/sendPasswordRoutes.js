@@ -1,19 +1,19 @@
 var data_dir = process.env.OPENSHIFT_DATA_DIR || "./";
-var aux = require('./aux.js');
-var database = require('./database.js');
+var aux = require('./../lib/aux.js');
+var database = require('./../lib/database.js');
 var fs = require('fs');
 var login = JSON.parse(fs.readFileSync(data_dir+'/gmail.json').toString());
 var nodemailer = require('nodemailer');
 
-function passwordRecovery(nick,email,callback) 
+function passwordRecovery(nick,email,callback)
 {
     newpass = aux.randomPassword();
     database.updatePassword(nick,newpass,function(err,rows) {
 	var smtps = 'smtps://'+login["user"]+'%40gmail.com:'+login["password"]+'@smtp.gmail.com';
 	var mailOptions = {
 	    from: '"Freiworld" <'+login["user"]+'@gmail.com>',
-	    to: email, 
-	    text: 'Hola '+nick+'; tu nuevo password en freiworld es: '+newpass, 
+	    to: email,
+	    text: 'Hola '+nick+'; tu nuevo password en freiworld es: '+newpass,
 	    subject: 'Recuperación de contraseña'
 	};
 	var transporter = nodemailer.createTransport(smtps);
@@ -29,7 +29,7 @@ function passwordRecovery(nick,email,callback)
 }
 
 module.exports = function(app) {
-    
+
     app.post('/sendPassword',function(req,res,next) {
 	database.userByNick(req.body.email,function(err,rows) {
 	    if ( !err ) {
@@ -47,7 +47,7 @@ module.exports = function(app) {
 	    }
 	});
     });
-    
+
     app.post('/sendPassword',function(req,res,next) {
 	database.userByEmail(req.body.email,function(err,rows) {
 	    if ( !err ) {
@@ -69,4 +69,4 @@ module.exports = function(app) {
     app.post('/sendPassword',function(req,res,next) {
 	res.render('passwordRecovery',{ fail: 'No existe usuario con dicho nick o email'});
     });
-}    
+}

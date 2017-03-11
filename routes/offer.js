@@ -1,6 +1,6 @@
-var aux = require('./aux.js');
-var database = require('./database.js');
-var infojobs = require('./infojobs.js');
+var aux = require('./../lib/aux.js');
+var database = require('./../lib/database.js');
+var infojobs = require('./../lib/infojobs.js');
 
 module.exports = function(app) {
 

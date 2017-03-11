@@ -1,5 +1,5 @@
-var aux = require('./aux.js');
-var infojobs = require('./infojobs.js');
+var aux = require('./../lib/aux.js');
+var infojobs = require('./../lib/infojobs.js');
 var maxResults = 30;
 
 module.exports = function(app) {

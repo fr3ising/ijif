@@ -1,6 +1,6 @@
 var data_dir = process.env.OPENSHIFT_DATA_DIR || "./";
-var aux = require('./aux.js');
-var database = require('./database.js');
+var aux = require('./../lib/aux.js');
+var database = require('./../lib/database.js');
 var fs = require('fs');
 var promo = JSON.parse(fs.readFileSync(data_dir+'/forocoches.json').toString());
 
