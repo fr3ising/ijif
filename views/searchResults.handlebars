@@ -1,11 +1,25 @@
 <br/>
+<script>
+function showLog(pop_id) {
+    var popup = document.getElementById(pop_id);
+    popup.classList.toggle("show");
+}
+</script>
+
+<h1>{{nick}}</h1>
 {{#if offers}}
 {{#each offers}}
 {{#if this.title}}
 <form id="{{this.id}}" action="/storeOffer" method="post">
   <input type="hidden" name="ijid" value="{{this.id}}" />
+  {{#if ../../nick}}
   <a name="#{{this.id}}"></a>
   <h1><a href="#{{this.id}}" onclick="document.getElementById('{{this.id}}').submit();">{{this.title}}</a></h1>
+  {{else}}
+  <h1><a class="popup" onclick="showLog('pop_#{{this.id}}')">{{this.title}}
+      <span class="popuptext" id="pop_#{{this.id}}">Identifícate o regístrate para ver
+	el detalle de la oferta: '{{this.title}}'</span></a></h1>
+  {{/if}}
 </form>
 {{this.city}} 
 {{#if this.salaryMin.value}}

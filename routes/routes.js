@@ -114,7 +114,7 @@ module.exports = function(app) {
 
     app.get('/search',function(req,res) {
 	infojobs.getOffers(req.query.q,maxResults,function(err,offers) {
-	    res.render('searchResults',{
+	    res.render('searchResults',{nick: req.session.nick,
 		offers: offers, q: req.query.q, layout: false});
 	});
 	if ( req.session.nick ) {
