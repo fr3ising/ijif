@@ -1,6 +1,5 @@
 <div class="container">
 
-  {{#if nick}}
 
   <a name="searchForm"></a>
   <input id="q" style="width:240px;" name="q" class="form-control" placeholder="Términos de búsqueda" required></input>
@@ -14,6 +13,8 @@
     <span class="glyphicon glyphicon-euro" style="margin-right:30px"></span>Media de salarios</button>
   
   <div id="pays"></div>
+
+  {{#if nick}}
 
   <div id="offers">
     <!-- <h1 style="color:olive"><i>Consultadas recientemente:</i></h1> -->
@@ -42,6 +43,7 @@
   <!--   <span class="glyphicon glyphicon-send" style="margin-right:30px"></span> Enviar link -->
   <!-- </a> -->
   {{else}}
+  <div id="offers"></div>
   <br/>
   <a href="/signin" style="width:240px;text-align:left" class="btn btn-primary btn-lg">
     <span class="glyphicon glyphicon-eye-open" style="margin-right:30px"></span> Identificarse
