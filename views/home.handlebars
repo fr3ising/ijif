@@ -4,13 +4,13 @@
   <a name="searchForm"></a>
   <input id="q" style="width:240px;" name="q" class="form-control" placeholder="Términos de búsqueda" required></input>
   <br/>
-  <button style="width:240px;" class="btn btn-lg btn-primary btn-block" 
+  <button style="width:240px; z-index:1;" class="btn btn-lg btn-primary btn-block" 
 	  onclick="searchScript($('#q').val());" type="submit">
-    <span class="glyphicon glyphicon-search" style="margin-right:30px"></span>Buscar en infojobs</button>
+    <span class="glyphicon glyphicon-search" style="margin-right:30px; z-index:1"></span>Buscar en infojobs</button>
   <br/>
-  <button style="width:240px;" class="btn btn-lg btn-success primary btn-block" 
+  <button style="width:240px; z-index:1;" class="btn btn-lg btn-success primary btn-block" 
 	  onclick="payScript($('#q').val());" type="submit">
-    <span class="glyphicon glyphicon-euro" style="margin-right:30px"></span>Media de salarios</button>
+    <span class="glyphicon glyphicon-euro" style="margin-right:30px; z-index:1"></span>Media de salarios</button>
   
   <div id="pays"></div>
 
