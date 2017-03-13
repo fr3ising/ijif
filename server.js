@@ -25,7 +25,7 @@ app.set('port', server_port);
 app.set('env','development');
 app.disable('x-powered-by');
 
-app.use(bodyParser.json());                        
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser(credentials.cookieSecret));
 app.use(session({
